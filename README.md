@@ -1,6 +1,4 @@
-[![Test_API](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/Test_API.yml/badge.svg)](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/Test_API.yml)
-
-[![Docker CI](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/docker-image.yml/badge.svg)](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/docker-image.yml)
+[![Test_API](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/Test_API.yml/badge.svg)](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/Test_API.yml)  [![Docker CI](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/docker-image.yml/badge.svg)](https://github.com/yrangana/Image_to_LaTeX/actions/workflows/docker-image.yml)
 
 # Image_to_LaTeX
 
