@@ -1,0 +1,26 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: make install
+
+    - name: Run tests
+      run: make test
+
+    # Test the API
+    - name: Test API endpoints
+      run: |
+        curl -X GET http://127.0.0.1:5050/api/health | grep "healthy"
