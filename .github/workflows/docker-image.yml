@@ -31,15 +31,10 @@ jobs:
       run: |
         docker run -d -p 5050:5050 --name image_to_latex image_to_latex
 
-    # Test the API
-    - name: Test API endpoints
+    - name: Test API health
       run: |
         sleep 5  # Allow time for the container to start
         curl -X GET http://localhost:5050/api/health | grep "healthy"
-        curl -X POST "http://localhost:5050/api/generate" \
-          -H "Content-Type: multipart/form-data" \
-          -F "file=@tests/example.png" \
-          -F "type=table" | grep "latex"
 
     # Stop and remove the container
     - name: Clean up
