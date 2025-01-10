@@ -4,7 +4,9 @@ FROM python:3.10-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    APP_HOME=/app
+    APP_HOME=/app \
+    OLLAMA_API_HOST=http://host.docker.internal:11434  
+    # Default to host.docker.internal for Ollama
 
 # Set the working directory
 WORKDIR $APP_HOME
