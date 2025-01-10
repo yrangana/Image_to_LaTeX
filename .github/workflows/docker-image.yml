@@ -1,0 +1,48 @@
+name: Docker CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Set up Docker
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    # Build the Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t image_to_latex .
+
+    # Run Docker container
+    - name: Run Docker container
+      run: |
+        docker run -d -p 5050:5050 --name image_to_latex image_to_latex
+
+    # Test the API
+    - name: Test API endpoints
+      run: |
+        sleep 5  # Allow time for the container to start
+        curl -X GET http://localhost:5050/api/health | grep "healthy"
+        curl -X POST "http://localhost:5050/api/generate" \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@tests/example.png" \
+          -F "type=table" | grep "latex"
+
+    # Stop and remove the container
+    - name: Clean up
+      run: |
+        docker stop image_to_latex
+        docker rm image_to_latex
