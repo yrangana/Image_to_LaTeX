@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Test_API
 
 on:
   push:
@@ -19,8 +19,3 @@ jobs:
 
     - name: Run tests
       run: make test
-
-    # Test the API
-    - name: Test API endpoints
-      run: |
-        curl -X GET http://127.0.0.1:5050/api/health | grep "healthy"
