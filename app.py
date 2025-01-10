@@ -44,7 +44,7 @@ class OllamaLatexGenerator:
 
     def clean_latex(self, latex_code, content_type):
         """
-        Clean the LaTeX code by removing unnecessary preambles and explanations.
+        Clean the LaTeX code by removing unnecessary preambles and explanations
         """
         # Extract content within LaTeX code blocks
         latex_pattern = r"```latex(.*?)```"
