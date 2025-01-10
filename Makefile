@@ -54,6 +54,12 @@ run-env:
 	@echo "Running Flask app with environment variables from $(ENV)..."
 	@export $(shell sed 's/=.*//' $(ENV)) && $(PYTHON) $(FLASK_APP)
 
+# Run Streamlit app
+.PHONY: run-streamlit
+run-streamlit:
+	@echo "Running Streamlit app..."
+	streamlit run streamlit_app/main.py
+
 # Help
 .PHONY: help
 help:
@@ -65,3 +71,4 @@ help:
 	@echo "  make install   - Install dependencies from requirements.txt"
 	@echo "  make clean     - Clean up temporary files"
 	@echo "  make run-env   - Run Flask app with .env variables loaded"
+	@echo "  make run-streamlit - Run Streamlit app"
