@@ -7,10 +7,27 @@ A Flask API powered by a locally hosted multimodal LLM (via Ollama) to generate 
 ## Features
 
 - Multi-Content Support: Extracts LaTeX for equations, tables, and formatted text.
+- Preferred Model: Optimized for the multimodal LLM `llava:34b`.
 - Fuzzy Matching: Handles variations in LaTeX syntax for robust extraction.
 - Conference Styles: Outputs tailored for formats like IEEE.
 - Privacy First: No external API calls; processes are hosted locally.
 - Extensible: Built on Flask with well-structured, modular code.
+
+## Prerequisites
+
+To use this API, you must either have Ollama installed locally or have access to a running Ollama API host with multimodal LLM support (e.g., `llava:34b`).
+
+1. **Ollama Installed Locally**:
+   - Download and install Ollama by following the instructions at https://ollama.com/.
+   - Ensure the Ollama service is running and accessible on `http://localhost:11434` (default).
+
+2. **Accessible Ollama API Host**:
+   - If you are not running Ollama locally, set the `OLLAMA_API_HOST` environment variable to the accessible API host URL of a running Ollama instance.
+
+   Example:
+   ```bash
+   OLLAMA_API_HOST=http://<remote-host>:<port>
+   ```
 
 ## Requirements
 
