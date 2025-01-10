@@ -144,7 +144,7 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
    ```
 2. Run the Docker container:  
    ```bash
-   docker run -p 5050:5050 -e OLLAMA_API_HOST=http://host.docker.internal:11434 -name image_to_latex image_to_latex
+   docker run -p 5050:5050 -e OLLAMA_API_HOST=http://host.docker.internal:11434 --name image_to_latex image_to_latex
    ```
 3. Access the API at `http://localhost:5050`.
 
