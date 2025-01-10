@@ -8,3 +8,4 @@ pillow==11.1.0
 pytesseract==0.3.13
 ollama==0.4.5
 flasgger==0.9.7.1
+pytest-mock==3.14.0
