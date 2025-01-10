@@ -36,7 +36,7 @@ install:
 .PHONY: format
 format:
 	@echo "Formatting code with black..."
-	black $(FLASK_APP)
+	black $(FLASK_APP) tests/*.py
 
 # Clean up temporary files
 .PHONY: clean
