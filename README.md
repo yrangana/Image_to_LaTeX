@@ -125,15 +125,38 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
 -F "type=table"
 ```
 
+## Example API Response
+
+```json
+{
+  "status": "success",
+  "data": {
+    "latex": "\\begin{table}[!t]\n\\centering\n\\caption{Example Table}\n\\label{tab:example}\n\\begin{tabular}{|c|c|c|}\n\\hline\nA & B & C \\\\\n\\hline\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n\\hline\n\\end{tabular}\n\\end{table}"
+  }
+}
+```
+
+## Using Docker Image
+
+1. Build the Docker image:  
+   ```bash
+   docker build -t image_to_latex .
+   ```
+2. Run the Docker container:  
+   ```bash
+   docker run -p 5050:5050 -e OLLAMA_API_HOST=http://host.docker.internal:11434 -name image_to_latex image_to_latex
+   ```
+3. Access the API at `http://localhost:5050`.
+
 ## Contributing
 
 1. Fork the repository.  
 2. Create a new branch for your feature or bugfix:  
-   git checkout -b feature/my-feature  
+   `git checkout -b feature/my-feature  `
 3. Commit your changes:  
-   git commit -m "Add my new feature"  
+   `git commit -m "Add my new feature"  `
 4. Push the branch:  
-   git push origin feature/my-feature  
+   `git push origin feature/my-feature  `
 5. Open a pull request.  
 
 ## Acknowledgments
