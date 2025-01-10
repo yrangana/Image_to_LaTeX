@@ -12,6 +12,9 @@ A Flask API powered by a locally hosted multimodal LLM (via Ollama) to generate 
 - Conference Styles: Outputs tailored for formats like IEEE.
 - Privacy First: No external API calls; processes are hosted locally.
 - Extensible: Built on Flask with well-structured, modular code.
+- Dockerized: Easy deployment with a Docker image.
+- docker-compose: Run the API with Ollama using `docker-compose`.
+- CI/CD: Automated testing and Docker image builds with GitHub Actions.
 
 ## Prerequisites
 
@@ -136,7 +139,7 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
 }
 ```
 
-## Using Docker Image
+## Using Dockerfile
 
 1. Build the Docker image:  
    ```bash
@@ -147,6 +150,28 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
    docker run -p 5050:5050 -e OLLAMA_API_HOST=http://host.docker.internal:11434 --name image_to_latex image_to_latex
    ```
 3. Access the API at `http://localhost:5050`.
+
+## Using docker-compose
+
+docker-compose.yml is provided to run the API with Ollama. This file contains the necessary configurations to run both services together. 
+
+1. Build the Docker image:  
+   ```bash
+   docker-compose build
+   ```
+
+2. Run the Docker container:  
+   ```bash
+   docker-compose up -d
+   ```
+
+durring the first run, the Ollama will take some time to download the llava:34b model.
+
+3. Access the API at `http://localhost:5050`.
+
+## API Documentation
+
+The API documentation is available at `http://localhost:5050/apidocs`.
 
 ## Contributing
 
