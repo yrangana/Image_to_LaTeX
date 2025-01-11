@@ -49,13 +49,22 @@ def test_generate_latex_success(client, mocker):
     """Test the /api/generate endpoint with valid inputs."""
     mocker.patch(
         "app.OllamaLatexGenerator.generate_latex",
-        return_value="\\begin{table}...\n\\end{table}",
+        return_value=("\\begin{table}...\n\\end{table}", "llava:34b"),
     )
 
-    data = {"file": (BytesIO(b"fake image data"), "example.png"), "type": "table"}
+    # Prepare test data
+    data = {
+        "type": "table",
+        "file": (BytesIO(b"fake image data"), "example.png"),
+    }
+
+    # Perform API request
     response = client.post(
         "/api/generate", content_type="multipart/form-data", data=data
     )
+
+    # Assertions
     assert response.status_code == 200
     assert response.json["latex"] == "\\begin{table}...\n\\end{table}"
     assert response.json["type"] == "table"
+    assert response.json["model"] == "llava:34b"
