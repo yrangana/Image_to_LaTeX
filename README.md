@@ -169,6 +169,16 @@ durring the first run, the Ollama will take some time to download the llava:34b 
 
 3. Access the API at `http://localhost:5050`.
 
+## Streamlit Web App
+
+A Streamlit web app is available to interact with the API and test. To run the Streamlit app, use the following command:
+
+```bash
+streamlit run sreamlit_app/main.py
+```
+
+The Streamlit app will be available at `http://localhost:8501`.
+
 ## API Documentation
 
 The API documentation is available at `http://localhost:5050/apidocs`.
