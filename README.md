@@ -184,6 +184,9 @@ streamlit run sreamlit_app/main.py
 
 The Streamlit app will be available at `http://localhost:8501`.
 
+
+![Streamlit Web App](./data/demo/Streamlit%20Demo.png)
+
 ## API Documentation
 
 The API documentation is available at `http://localhost:5050/apidocs`.
