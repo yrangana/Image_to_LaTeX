@@ -53,22 +53,26 @@ if st.button("🔄 Generate LaTeX Code"):
         st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
 
         # Prepare the file for API request
-        files = {"file": uploaded_file.getvalue()}
+        files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
         data = {"type": content_type, "model": model_name}
 
         with st.spinner("Processing your image..."):
             try:
                 # Send request to the API
-                response = requests.post(API_URL, files={"file": uploaded_file}, data=data)
+                response = requests.post(API_URL, files=files, data=data)
+                st.write(response.json())
                 if response.status_code == 200:
                     result = response.json()
                     latex_code = result["latex"]
+                    used_model = result.get("model", "Not specified")
+                    response_type = result.get("type", "Unknown")
 
                     # Show success message and LaTeX code
                     st.success("🎉 LaTeX Code Generated Successfully!")
                     st.subheader("LaTeX Code")
                     st.code(latex_code, language="latex")
-                    st.write(f"**Model Used:** {result.get('model', 'Not specified')}")
+                    st.write(f"**Content Type:** {response_type}")
+                    st.write(f"**Model Used:** {used_model}")
                 else:
                     st.error(f"Error: {response.json().get('error', 'An unknown error occurred.')}")
             except Exception as e:

@@ -98,7 +98,7 @@ class OllamaLatexGenerator:
 
             # Clean the LaTeX code
             cleaned_latex = self.clean_latex(response.response, content_type)
-            return cleaned_latex
+            return cleaned_latex, model_to_use
 
         except Exception as e:
             raise Exception(f"Failed to generate LaTeX: {str(e)}")
@@ -183,11 +183,11 @@ def generate_latex():
         file.save(filepath)
 
         generator = OllamaLatexGenerator()
-        latex_code = generator.generate_latex(str(filepath), content_type , model)
+        latex_code,used_model = generator.generate_latex(str(filepath), content_type , model)
 
         os.remove(filepath)
 
-        return jsonify({"latex": latex_code, "type": content_type , "model": model}), 200
+        return jsonify({"latex": latex_code, "type": content_type , "model": used_model}), 200
 
     except FileNotFoundError as e:
         return jsonify({"error": f"File error: {str(e)}"}), 400
