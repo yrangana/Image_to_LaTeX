@@ -35,6 +35,15 @@ with col2:
     st.header("Select Content Type")
     content_type = st.radio("Content type in the image:", ["table", "equation", "text"])
 
+# Model selection
+st.divider()
+st.header("Model Selection")
+model_name = st.text_input(
+    "Enter the model name to use for LaTeX generation:",
+    value="llava:34b",
+    help="Specify the model for generating LaTeX (default is llava:34b)."
+)
+
 st.divider()
 
 # Submit button
@@ -45,7 +54,7 @@ if st.button("🔄 Generate LaTeX Code"):
 
         # Prepare the file for API request
         files = {"file": uploaded_file.getvalue()}
-        data = {"type": content_type}
+        data = {"type": content_type, "model": model_name}
 
         with st.spinner("Processing your image..."):
             try:
@@ -59,6 +68,7 @@ if st.button("🔄 Generate LaTeX Code"):
                     st.success("🎉 LaTeX Code Generated Successfully!")
                     st.subheader("LaTeX Code")
                     st.code(latex_code, language="latex")
+                    st.write(f"**Model Used:** {result.get('model', 'Not specified')}")
                 else:
                     st.error(f"Error: {response.json().get('error', 'An unknown error occurred.')}")
             except Exception as e:

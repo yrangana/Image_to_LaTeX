@@ -63,6 +63,7 @@ class OllamaLatexGenerator:
             if match:
                 latex_code = match.group(0).strip()
             else:
+                print("No valid LaTeX content found." + latex_code)
                 return "No valid LaTeX content found."
 
         # Common cleanup for all content types
@@ -73,8 +74,8 @@ class OllamaLatexGenerator:
 
         return latex_code.strip()
 
-    def generate_latex(self, image_path, content_type):
-        """Generate LaTeX code from the provided image based on content type."""
+    def generate_latex(self, image_path, content_type, model=None):
+        """Generate LaTeX code from the provided image based on content type with given model."""
         if not Path(image_path).is_file():
             raise FileNotFoundError(f"Image file not found: {image_path}")
 
@@ -88,9 +89,11 @@ class OllamaLatexGenerator:
         - Do not include explanations or additional text outside the LaTeX code block.
         """
 
+        model_to_use = model or self.model
+        
         try:
             response = self.client.generate(
-                model=self.model, prompt=prompt, images=[base64_image], stream=False
+                model = model_to_use, prompt=prompt, images=[base64_image], stream=False
             )
 
             # Clean the LaTeX code
@@ -131,6 +134,14 @@ def allowed_file(filename):
                 "required": True,
                 "description": "Type of content in the image (table, equation, or text)",
             },
+            {
+                "name": "model",
+                "in": "formData",
+                "type": "string",
+                "required": False,
+                "description": "Model name to use for generating LaTeX (default: llava:34b)",
+                "default": MODEL_NAME,
+            }
         ],
         "responses": {
             200: {
@@ -155,6 +166,7 @@ def generate_latex():
 
     file = request.files["file"]
     content_type = request.form.get("type", "").lower()
+    model = request.form.get("model", None)
 
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
@@ -171,11 +183,11 @@ def generate_latex():
         file.save(filepath)
 
         generator = OllamaLatexGenerator()
-        latex_code = generator.generate_latex(str(filepath), content_type)
+        latex_code = generator.generate_latex(str(filepath), content_type , model)
 
         os.remove(filepath)
 
-        return jsonify({"latex": latex_code, "type": content_type})
+        return jsonify({"latex": latex_code, "type": content_type , "model": model}), 200
 
     except FileNotFoundError as e:
         return jsonify({"error": f"File error: {str(e)}"}), 400

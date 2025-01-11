@@ -99,6 +99,13 @@ make test  (Run tests with pytest)
 make clean (Clean up temporary files)  
 ```
 
+## Makefile Targets
+
+- run: Starts the Flask server.  
+- lint: Runs pylint to check code quality.  
+- test: Runs tests using pytest.  
+- clean: Cleans up temporary files like `.pytest_cache`.  
+
 ### API Endpoints
 
 1. `/api/generate`:  
@@ -107,17 +114,12 @@ make clean (Clean up temporary files)
    - Parameters:  
      - file: The image file (required).  
      - type: The content type (table, equation, text).  
+     - model: The multimodal LLM model (default: llava:34b) (optional).
 
 2. `/api/health`:  
    - Method: GET  
    - Description: Checks the API health status.  
 
-## Makefile Targets
-
-- run: Starts the Flask server.  
-- lint: Runs pylint to check code quality.  
-- test: Runs tests using pytest.  
-- clean: Cleans up temporary files like `.pytest_cache`.  
 
 ## Example API Request
 
@@ -126,6 +128,7 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
 -H "Content-Type: multipart/form-data" \  
 -F "file=@example.png" \  
 -F "type=table"
+-F "model=llava:34b"
 ```
 
 ## Example API Response
@@ -134,7 +137,9 @@ curl -X POST "http://127.0.0.1:5050/api/generate" \
 {
   "status": "success",
   "data": {
-    "latex": "\\begin{table}[!t]\n\\centering\n\\caption{Example Table}\n\\label{tab:example}\n\\begin{tabular}{|c|c|c|}\n\\hline\nA & B & C \\\\\n\\hline\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n\\hline\n\\end{tabular}\n\\end{table}"
+   "latex": "\\begin{table}[!t]\n\\centering\n\\caption{Example Table}\n\\label{tab:example}\n\\begin{tabular}{|c|c|c|}\n\\hline\nA & B & C \\\\\n\\hline\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+   "type": "table",
+   "model": "llava:34b"
   }
 }
 ```
